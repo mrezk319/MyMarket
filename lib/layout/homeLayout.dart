@@ -22,6 +22,9 @@ class HomeLayout extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
+            leading: Icon(
+              Icons.add_shopping_cart,color: Colors.white,
+            ),
             title: Text("Rezk-Shop",style: TextStyle(color: Colors.black,fontSize: 20),),
             actions: [
               IconButton(icon: Icon(Icons.search,color: Colors.deepPurple,),onPressed: (){
