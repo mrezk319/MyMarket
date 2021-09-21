@@ -199,4 +199,30 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
       emit(ErrorCart());
     });
   }
+
+  int quantity = 1;
+  void plusQuantity(GetCartModel model,index){
+    quantity = model.data.cartItems[index].quantity;
+    quantity++;
+    emit(plusDone());
+  }
+
+  void minusQuantity(GetCartModel model,index){
+    quantity = model.data.cartItems[index].quantity;
+    if(quantity >1)
+    quantity--;
+    emit(minusDone());
+  }
+  void updateCartData({required String id,int? quantity}){
+    emit(LoadinggetCountCarts());
+    DioHelper.putData(path:"${CARTSUPDATE+id}", data: {
+      'quantity':quantity
+    },Token: Token).then((value) {
+      getAllCarts();
+      emit(SuccessgetCountCarts());
+    }).catchError((error){
+      emit(ErrorgetCountCarts());
+    });
+  }
+
 }

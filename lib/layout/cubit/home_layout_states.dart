@@ -61,3 +61,10 @@ class ErrorGetCAtegoryDetailsData extends HomeLayoutStates{}
 class LoadinggetAllCarts extends HomeLayoutStates{}
 class SuccessgetAllCarts extends HomeLayoutStates{}
 class ErrorgetAllCarts extends HomeLayoutStates{}
+
+class LoadinggetCountCarts extends HomeLayoutStates{}
+class SuccessgetCountCarts extends HomeLayoutStates{}
+class ErrorgetCountCarts extends HomeLayoutStates{}
+
+class plusDone extends HomeLayoutStates{}
+class minusDone extends HomeLayoutStates{}

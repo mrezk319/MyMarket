@@ -63,6 +63,25 @@ Widget productsView(GetCartModel? model,index,context){
             SizedBox(height: 5,),
             Row(
               children: [
+                IconButton(onPressed: (){
+                  HomeLayoutCubit.get(context).minusQuantity(model,index);
+                  HomeLayoutCubit.get(context).updateCartData(id: model.data.cartItems[index].id.toString(),quantity: HomeLayoutCubit.get(context).quantity);
+                },icon: Icon(Icons.remove),color: Colors.purple,),
+
+
+                SizedBox(width: 2,),
+              Text(model.data.cartItems[index].quantity.toString(),style: TextStyle(color: Colors.purple,fontSize: 25),),
+                SizedBox(width: 2,),
+
+
+                IconButton(onPressed: (){
+                HomeLayoutCubit.get(context).plusQuantity(model,index);
+                HomeLayoutCubit.get(context).updateCartData(id: model.data.cartItems[index].id.toString(),quantity: HomeLayoutCubit.get(context).quantity);
+                },icon: Icon(Icons.add),color: Colors.purple,),
+            ],),
+            SizedBox(height: 5,),
+            Row(
+              children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text("${model.data.cartItems[index].product.price.toString()} EGP",style: TextStyle(color: Colors.purple),),
@@ -71,7 +90,8 @@ Widget productsView(GetCartModel? model,index,context){
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 15.0),
-                    child: Row(children: [
+                    child: Row(
+                      children: [
                       Icon(Icons.restore_from_trash,color: Colors.red,),
                       Text("Remove from cart",style: TextStyle(color: Colors.red),)
                     ],),
