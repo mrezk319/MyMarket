@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
+import 'package:shop_app_2/models/cartModel.dart';
 import 'package:shop_app_2/models/categoriesModel.dart';
 import 'package:shop_app_2/models/categoryDetailsModel.dart';
 import 'package:shop_app_2/models/getCartModel.dart';
@@ -13,7 +14,6 @@ import 'package:shop_app_2/models/userModel.dart';
 import 'package:shop_app_2/modules/categories/categories_screen.dart';
 import 'package:shop_app_2/modules/favorite/favorite_screen.dart';
 import 'package:shop_app_2/modules/home/home_screen.dart';
-import 'package:shop_app_2/modules/logIn/cubit/logInStates.dart';
 import 'package:shop_app_2/modules/settings/settings_screen.dart';
 import 'package:shop_app_2/shared/components/constance.dart';
 import 'package:shop_app_2/shared/network/endBoints.dart';
@@ -26,12 +26,16 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
   static HomeLayoutCubit get(context)=>BlocProvider.of(context);
 
   HomeModel? homeModel;
+  Map<int,bool> isCart = {};
   void getHomeData(){
     emit(LoadingGetHomeData());
     DioHelper.getData(path: HOME, Token: Token).then((value) {
       homeModel = HomeModel.fromJson(value.data);
       homeModel!.data!.products.forEach((e) {
         isFavorite.addAll({e.id:e.inFavorites});
+      });
+      homeModel!.data!.products.forEach((element) {
+        isCart.addAll({element.id:element.inCart});
       });
       emit(SuccessGetHomeData());
     }).catchError((error){
@@ -51,7 +55,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
     indexBottomNavBar = x;
     emit(BottomNavBarChanged());
   }
-  
+
   CategoriesModel? categoriesModel;
   void getCategories(){
     emit(LoadingGetCategoriesData());
@@ -99,7 +103,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
       'text':txt
     },Token: Token).then((value) {
       searchModel = SearchModel.fromJson(value.data);
-      print(searchModel!.data.data.length);
       emit(SuccessSearch());
     }).catchError((error){
       emit(ErrorSearch());
@@ -129,6 +132,71 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
       emit(SuccessUpdate());
     }).catchError((error){
       emit(ErrorUpdate());
+    });
+  }
+
+  ProductDetailsModel? productDetailsModel;
+  void getProductDetails(String id){
+    emit(LoadingGetProductsDetailsData());
+    DioHelper.getData(path: "${PRODUCTSDETAILS+id}", Token: Token).then((value){
+      productDetailsModel = ProductDetailsModel.fromJson(value.data);
+      emit(SuccessGetProductsDetailsData());
+    }).catchError((error){
+      print(error.toString());
+      emit(ErrorGetProductsDetailsData());
+    });
+  }
+
+  int value = 0;
+  void changeVal(val){
+    value = val;
+    emit(ChangeIndicatorState());
+  }
+
+
+
+  CategoryDetailsModel? categoyDetails;
+  void getCategoryDetail({
+    required int? catId
+  }){
+    emit(LoadingGetCAtegoryDetailsData());
+    DioHelper.getData(path: PRODUCTS, Token: Token,data: {
+      'category_id':catId,
+    }).then((value){
+      categoyDetails = CategoryDetailsModel.fromJson(value.data);
+      emit(SuccessGetCAtegoryDetailsData());
+    }).catchError((error){
+      print(error.toString());
+      emit(ErrorGetCAtegoryDetailsData());
+    });
+  }
+
+  GetCartModel? getCartModel;
+  void getAllCarts(){
+    emit(LoadinggetAllCarts());
+    DioHelper.getData(path: CARTS, Token: Token).then((value){
+      getCartModel = GetCartModel.fromJson(value.data);
+      emit(SuccessgetAllCarts());
+    }).catchError((error){
+      print(error.toString());
+      emit(ErrorgetAllCarts());
+    });
+  }
+
+
+  CartModel? cartModel;
+  void changeCart({required int id}){
+    emit(LoadingCart());
+    DioHelper.postData(path: CARTS, data: {
+      'product_id':id
+    },Token: Token).then((value) {
+      isCart[id] = !(isCart[id]??false);
+      getAllCarts();
+      cartModel = CartModel.fromJson(value.data);
+      emit(SuccessCart(cartModel!));
+    }).catchError((error){
+      print(error.toString());
+      emit(ErrorCart());
     });
   }
 }

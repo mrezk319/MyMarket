@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:shop_app_2/models/getFavoritesModel.dart';
-import 'package:shop_app_2/models/homeModel.dart';
 import 'package:shop_app_2/modules/productDetails/product_details.dart';
 
 class Favorites extends StatelessWidget {
@@ -16,39 +14,43 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
+    return BlocProvider.value(value: BlocProvider.of<HomeLayoutCubit>(context)..getFavorite(),
+    child: BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         builder: (context, state) =>
-        HomeLayoutCubit.get(context).getFavoritesModel!.data.data.isEmpty
-                ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "There is no product in your favourite try add some",textAlign: TextAlign.center,style: TextStyle(color: Colors.deepPurple.shade200,fontSize: 25),
-                  ),
-                  ],
-                )
-                :
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Container(
-                      color: Colors.grey[200],
-                      child: GridView.count(
-                          crossAxisCount: 1,
-                          children: List.generate(
-                              HomeLayoutCubit.get(context)
-                                  .getFavoritesModel!
-                                  .data
-                                  .data
-                                  .length,
-                              (index) => productsFavView(
-                                  HomeLayoutCubit.get(context).getFavoritesModel,
-                                  index,
-                                  HomeLayoutCubit.get(context).isFavorite,
-                                  context)),
-                        ),
-                    ),
-                  ),
+        HomeLayoutCubit.get(context).getFavoritesModel == null
+            ?
+        Center(child: CircularProgressIndicator(color: Colors.purple,),)
+ :
+        HomeLayoutCubit.get(context).getFavoritesModel!.data.data.isEmpty?
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "There is no product in your favourite try add some",textAlign: TextAlign.center,style: TextStyle(color: Colors.deepPurple.shade200,fontSize: 25),
+            ),
+          ],
+        ):
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Container(
+            color: Colors.grey[200],
+            child: GridView.count(
+              crossAxisCount: 1,
+              children: List.generate(
+                  HomeLayoutCubit.get(context)
+                      .getFavoritesModel!
+                      .data
+                      .data
+                      .length,
+                      (index) => productsFavView(
+                      HomeLayoutCubit.get(context).getFavoritesModel,
+                      index,
+                      HomeLayoutCubit.get(context).isFavorite,
+                      context)),
+            ),
+          ),
+        ),
 
         listener: (context, state) {
           if (state is SuccessChangeFav) {
@@ -59,7 +61,7 @@ class Favorites extends StatelessWidget {
               duration: Duration(milliseconds: 450),
             ));
           }
-        });
+        }),);
   }
 }
 

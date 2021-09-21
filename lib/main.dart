@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shop_app_2/layout/homeLayout.dart';
 import 'package:shop_app_2/modules/logIn/log_in.dart';
 import 'package:shop_app_2/shared/components/constance.dart';
 import 'package:shop_app_2/shared/network/local/cache_helper.dart';
 import 'package:shop_app_2/shared/network/remote/dio_helper.dart';
 import 'blocObserver.dart';
+import 'layout/cubit/home_layout_cubit.dart';
 import 'modules/onBoarding/on_boarding.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
@@ -33,9 +34,13 @@ class MyApp extends StatelessWidget {
   MyApp(this.startApp);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: startApp,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context)=>HomeLayoutCubit()),
+        ],
+        child:  MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: startApp,
+        ));
   }
 }

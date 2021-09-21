@@ -2,13 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/layout/homeLayout.dart';
 import 'package:shop_app_2/models/cartModel.dart';
 import 'package:shop_app_2/models/productDetailsModel.dart';
-import 'package:shop_app_2/modules/productDetails/cubit/cubit.dart';
-import 'package:shop_app_2/modules/productDetails/cubit/states.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -18,62 +14,52 @@ class ProductDetails extends StatelessWidget {
   ProductDetails(this.id);
 
   var SmoothController = PageController();
-  Widget favoriteLoad = Icon(
-    Icons.favorite_border,
-    color: Colors.white,
-  );
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          ProductDetailsCubit()..getProductDetails(id.toString()),
-      child: BlocConsumer<ProductDetailsCubit, ProductDetailsStates>(
-          builder: (context, state) => Scaffold(
+    return  BlocProvider.value(
+            value: BlocProvider.of<HomeLayoutCubit>(context)..getProductDetails(id.toString()),
+          child: BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
+            builder: (context, state) => Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
                 backgroundColor: Colors.white,
-                appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                  iconTheme: IconThemeData(
+                elevation: 0,
+                iconTheme: IconThemeData(
                     color: Colors.deepPurple
+                ),
+              ),
+              body: state is LoadingGetProductsDetailsData
+                  ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: LinearProgressIndicator(
+                    color: Colors.deepPurpleAccent,
                   ),
                 ),
-                body: ProductDetailsCubit.get(context).productDetailsModel ==
-                        null
-                    ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: LinearProgressIndicator(
-                            color: Colors.deepPurpleAccent,
-                          ),
-                      ),
-                    )
-                    : bodyBuild(
-                        context,
-                        ProductDetailsCubit.get(context).productDetailsModel,
-                        SmoothController,ProductDetailsCubit.get(context).cartModel),
-              ),
-          listener: (context, state) {
-            if(state is SuccessCart){
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.cart.message.toString()),backgroundColor: Colors.green,duration: Duration(milliseconds: 350),));
-            }
-            if(state is ErrorCart){
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Deleted Succefully"),backgroundColor: Colors.green,duration: Duration(milliseconds: 350),));
-
-            }
-          }),
-    );
+              )
+                  : bodyBuild(
+                  context,
+                  HomeLayoutCubit.get(context).productDetailsModel,
+                  SmoothController,HomeLayoutCubit.get(context).cartModel,HomeLayoutCubit.get(context).isCart,id),
+            ),
+            listener: (context, state) {
+              if(state is SuccessCart){
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.cart.message.toString()),backgroundColor: Colors.green,duration: Duration(milliseconds: 350),));
+              }
+            })
+        );
+      }
   }
-}
 
-Widget bodyBuild(context, ProductDetailsModel? model, SmoothController,CartModel? cartModel) {
+Widget bodyBuild(context, ProductDetailsModel? model, SmoothController,CartModel? cartModel,cart,id) {
   List<Widget> images = [];
   model!.data.images.forEach((element) {
     images.add(Container(
       child: Image.network(element, fit: BoxFit.contain),
     ));
   });
-  return ProductDetailsCubit.get(context).productDetailsModel == null
+  return HomeLayoutCubit.get(context).productDetailsModel == null
       ? Center(child: CircularProgressIndicator())
       : Container(
           child: Padding(
@@ -89,13 +75,13 @@ Widget bodyBuild(context, ProductDetailsModel? model, SmoothController,CartModel
                     options: CarouselOptions(
                         height: 300,
                         onPageChanged: (x, reason) {
-                          ProductDetailsCubit.get(context).changeVal(x);
+                          HomeLayoutCubit.get(context).changeVal(x);
                         })),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Center(
                     child: AnimatedSmoothIndicator(
-                        activeIndex: ProductDetailsCubit.get(context).value,
+                        activeIndex: HomeLayoutCubit.get(context).value,
                         count: images.length),
                   ),
                 ),
@@ -104,10 +90,11 @@ Widget bodyBuild(context, ProductDetailsModel? model, SmoothController,CartModel
                   children: [
                     Text("${model.data.price.toString()} EGP",style: TextStyle(fontSize: 20,color: Colors.deepPurpleAccent),),
                     Spacer(),
-                    CircleAvatar(child: IconButton(icon: Icon(Icons.add_shopping_cart),onPressed: (){
-                      ProductDetailsCubit.get(context).changeCart(id: model.data.id);
+                    CircleAvatar(
+                      child: IconButton(icon: Icon(Icons.add_shopping_cart),onPressed: (){
+                      HomeLayoutCubit.get(context).changeCart(id: model.data.id);
                     },),
-                      backgroundColor:model.data.inCart?Colors.deepPurpleAccent: Colors.grey[200],minRadius: 26,
+                      backgroundColor:(HomeLayoutCubit.get(context).isCart[id]??true)?Colors.deepPurpleAccent: Colors.grey[200],minRadius: 26,
                     ),
                   ],
                 ),

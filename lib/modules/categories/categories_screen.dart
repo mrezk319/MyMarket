@@ -1,6 +1,5 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
@@ -11,9 +10,11 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
+    return BlocProvider.value(value: BlocProvider.of<HomeLayoutCubit>(context)..getCategories(),
+    child: BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
         builder:(context,state)=> HomeLayoutCubit.get(context).homeModel == null || HomeLayoutCubit.get(context).categoriesModel == null? Center(child: CircularProgressIndicator(color: Colors.purple,)) : ListView.separated(physics: BouncingScrollPhysics(),itemBuilder: (context,index)=>categoriesView(HomeLayoutCubit.get(context).categoriesModel,index,context), separatorBuilder: (context,index)=>Divider(height: 2,color: Colors.deepPurpleAccent,indent: 25,endIndent: 25,), itemCount: HomeLayoutCubit.get(context).categoriesModel!.dataAll.dataList.length),
         listener: (context,state){}
+    ),
     );
   }
 }

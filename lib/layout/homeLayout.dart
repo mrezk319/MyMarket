@@ -3,25 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
 import 'package:shop_app_2/modules/getCarts/GetCarts.dart';
-import 'package:shop_app_2/modules/logIn/log_in.dart';
 import 'package:shop_app_2/modules/search/search_screen.dart';
-import 'package:shop_app_2/shared/network/local/cache_helper.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeLayout extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context){
-    return BlocProvider(
-        create: (BuildContext context)=>HomeLayoutCubit()..getHomeData()..getCategories()..getFavorite()..getProfile(),
+    return  BlocProvider.value(
+      value: BlocProvider.of<HomeLayoutCubit>(context),
+
       child: BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
         builder: (context,state)=>Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
+            leading: Icon(
+              Icons.add_shopping_cart,color: Colors.white,
+            ),
             title: Text("Rezk-Shop",style: TextStyle(color: Colors.black,fontSize: 20),),
             actions: [
               IconButton(icon: Icon(Icons.search,color: Colors.deepPurple,),onPressed: (){
@@ -43,8 +44,8 @@ class HomeLayout extends StatelessWidget {
             ],
             activeIndex: HomeLayoutCubit.get(context).indexBottomNavBar,
             onTap: (x){
-            HomeLayoutCubit.get(context).changeIndexBottom(x);
-          },
+              HomeLayoutCubit.get(context).changeIndexBottom(x);
+            },
             activeColor: Colors.purpleAccent,
             gapLocation: GapLocation.center,
             notchSmoothness: NotchSmoothness.softEdge,
@@ -55,7 +56,6 @@ class HomeLayout extends StatelessWidget {
         listener: (context,state){
         },
       ),
-
     );
   }
 }

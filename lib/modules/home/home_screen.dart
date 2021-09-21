@@ -2,20 +2,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
 import 'package:shop_app_2/models/categoriesModel.dart';
 import 'package:shop_app_2/models/homeModel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:shop_app_2/modules/categoryDetails/category_details.dart';
 import 'package:shop_app_2/modules/productDetails/product_details.dart';
 class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
+    return BlocProvider.value(value: BlocProvider.of<HomeLayoutCubit>(context)..getHomeData()..getCategories(),
+    child: BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
         builder:(context,state)=> HomeLayoutCubit.get(context).homeModel == null || HomeLayoutCubit.get(context).categoriesModel == null? Center(child: CircularProgressIndicator(color: Colors.purple,)) : HomeView(HomeLayoutCubit.get(context).homeModel,HomeLayoutCubit.get(context).categoriesModel,HomeLayoutCubit.get(context).isFavorite,context),
 
         listener: (context,state){
@@ -24,7 +22,7 @@ class Home extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.user.message),backgroundColor: Colors.green,duration: Duration(milliseconds: 450),));
           }
         }
-    );
+    ),);
   }
 }
 Widget HomeView(HomeModel? modelHome,CategoriesModel? modelCat,Map<int,bool> fav,context) => SingleChildScrollView(
