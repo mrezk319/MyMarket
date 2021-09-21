@@ -1,29 +1,24 @@
 import 'package:flutter/cupertino.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
+import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
 import 'package:shop_app_2/models/categoryDetailsModel.dart';
-import 'package:shop_app_2/modules/categoryDetails/cubit/cubit.dart';
-import 'package:shop_app_2/modules/categoryDetails/cubit/states.dart';
 import 'package:shop_app_2/modules/productDetails/product_details.dart';
 class CategoryDetails extends StatelessWidget {
   final int? id;
   CategoryDetails({required this.id});
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context)=>CategoryDetailsCubit()..getCategoryDetail(catId: this.id),)
-      ],
-
-      child: BlocConsumer<CategoryDetailsCubit,CategoryDetailsStates>(
-        builder:(context,state)=>Scaffold(
+    return BlocProvider.value(
+      value: BlocProvider.of<HomeLayoutCubit>(context)..getCategoryDetail(catId: id),
+      child: BlocConsumer<HomeLayoutCubit,HomeLayoutStates>(
+        builder:(context,state)=> Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
             iconTheme: IconThemeData(color: Colors.purple),),
-          body: CategoryDetailsCubit.get(context).categoyDetails == null? Padding(
+          body: HomeLayoutCubit.get(context).categoyDetails == null || state is LoadingGetCAtegoryDetailsData ? Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Center(child: LinearProgressIndicator(color: Colors.purple,)),
         ) :
@@ -31,7 +26,7 @@ class CategoryDetails extends StatelessWidget {
           color: Colors.grey[200],
           child: GridView.count(
             crossAxisCount: 2,
-            children: List.generate(CategoryDetailsCubit.get(context).categoyDetails!.data.data.length, (index) => productsView(CategoryDetailsCubit.get(context).categoyDetails,index,context)),),
+            children: List.generate(HomeLayoutCubit.get(context).categoyDetails!.data.data.length, (index) => productsView(HomeLayoutCubit.get(context).categoyDetails,index,context)),),
         ),),
         listener: (context,state){
           if(state is SuccessGetCAtegoryDetailsData)

@@ -1,3 +1,4 @@
+import 'package:shop_app_2/models/cartModel.dart';
 import 'package:shop_app_2/models/userModel.dart';
 
 abstract class HomeLayoutStates{}
@@ -38,3 +39,25 @@ class ErrorGetProfileData extends HomeLayoutStates{}
 class LoadingUpdate extends HomeLayoutStates{}
 class SuccessUpdate extends HomeLayoutStates{}
 class ErrorUpdate extends HomeLayoutStates{}
+
+
+class InitialGetProductsDetailsState extends HomeLayoutStates{}
+class LoadingGetProductsDetailsData extends HomeLayoutStates{}
+class SuccessGetProductsDetailsData extends HomeLayoutStates{}
+class ErrorGetProductsDetailsData extends HomeLayoutStates{}
+class ChangeIndicatorState extends HomeLayoutStates{}
+
+class LoadingCart extends HomeLayoutStates{}
+class SuccessCart extends HomeLayoutStates{
+  final CartModel cart;
+  SuccessCart( this.cart);
+}
+class ErrorCart extends HomeLayoutStates{}
+
+class LoadingGetCAtegoryDetailsData extends HomeLayoutStates{}
+class SuccessGetCAtegoryDetailsData extends HomeLayoutStates{}
+class ErrorGetCAtegoryDetailsData extends HomeLayoutStates{}
+
+class LoadinggetAllCarts extends HomeLayoutStates{}
+class SuccessgetAllCarts extends HomeLayoutStates{}
+class ErrorgetAllCarts extends HomeLayoutStates{}

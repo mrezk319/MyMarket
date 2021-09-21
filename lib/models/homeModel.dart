@@ -52,7 +52,7 @@ class Products {
   String? description;
   List<String> images = [];
   late bool inFavorites;
-  bool? inCart;
+  late bool inCart;
 
 
   Products.fromJson(Map<String, dynamic> json) {
