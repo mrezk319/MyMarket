@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
-import 'package:shop_app_2/modules/logIn/log_in.dart';
-import 'package:shop_app_2/shared/network/local/cache_helper.dart';
+import 'package:Shop/modules/logIn/log_in.dart';
+import 'package:Shop/shared/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class PageViewData {
   PageViewData(

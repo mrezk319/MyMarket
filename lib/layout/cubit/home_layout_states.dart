@@ -1,5 +1,5 @@
-import 'package:shop_app_2/models/cartModel.dart';
-import 'package:shop_app_2/models/userModel.dart';
+import 'package:Shop/models/cartModel.dart';
+import 'package:Shop/models/userModel.dart';
 
 abstract class HomeLayoutStates{}
 class HomeLayoutInitialState extends HomeLayoutStates{}

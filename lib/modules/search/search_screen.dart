@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
-import 'package:shop_app_2/models/searchModel.dart';
-import 'package:shop_app_2/modules/productDetails/product_details.dart';
+import 'package:Shop/layout/cubit/home_layout_cubit.dart';
+import 'package:Shop/layout/cubit/home_layout_states.dart';
+import 'package:Shop/models/searchModel.dart';
+import 'package:Shop/modules/productDetails/product_details.dart';
 
 class Search extends StatelessWidget {
   @override

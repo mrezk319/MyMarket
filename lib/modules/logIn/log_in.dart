@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shop_app_2/layout/homeLayout.dart';
-import 'package:shop_app_2/modules/logIn/cubit/logInCubit.dart';
-import 'package:shop_app_2/modules/logIn/cubit/logInStates.dart';
-import 'package:shop_app_2/modules/signUp/sign_up.dart';
+import 'package:Shop/layout/homeLayout.dart';
+import 'package:Shop/modules/logIn/cubit/logInCubit.dart';
+import 'package:Shop/modules/logIn/cubit/logInStates.dart';
+import 'package:Shop/modules/signUp/sign_up.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/shared/components/constance.dart';
-import 'package:shop_app_2/shared/network/local/cache_helper.dart';
+import 'package:Shop/shared/components/constance.dart';
+import 'package:Shop/shared/network/local/cache_helper.dart';
 class LogIn extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -135,39 +135,6 @@ class LogIn extends StatelessWidget {
                             },child: loadOrText,),
                           )),
                       SizedBox(height: 35,),
-                      Text("Or connect using",style: TextStyle(color: Colors.black26),),
-                      SizedBox(height: 15,),
-                      Container(
-                        width: 300,
-                        child: Row(
-                          children: [
-                            MaterialButton(
-                              minWidth: 100,
-                              height: 50,
-                              shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5)),
-                              onPressed: (){},child: Row(
-                              children: [
-                                Icon(
-                                  Icons.facebook_rounded,
-                                  color: Colors.white,
-                                ),
-                                Text("  Facebook",style: TextStyle(color: Colors.white),),
-                              ],
-                            ),color: HexColor('#3b5998'),),
-                            Spacer(),
-                            MaterialButton(
-                              minWidth: 100,
-                              height: 50,
-                              shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5)),
-                              onPressed: (){},child: Row(
-                              children: [
-                                SizedBox(child:Image.asset('assets/images/googleIcon.png',height: 25,width: 25,)),
-                                Text("  Google",style: TextStyle(color: Colors.white),),
-                              ],
-                            ),color: HexColor('#EA4335'),),
-                          ],
-                        ),
-                      ),
                       SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

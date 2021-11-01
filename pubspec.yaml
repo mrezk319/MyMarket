@@ -1,4 +1,4 @@
-name: shop_app_2
+name: Shop
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -47,6 +47,11 @@ dev_dependencies:
   shared_preferences:
   animated_bottom_navigation_bar: ^0.3.2
   carousel_slider:
+  flutter_launcher_icons:
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.jfif"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
