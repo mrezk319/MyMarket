@@ -2,10 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
-import 'package:shop_app_2/models/categoriesModel.dart';
-import 'package:shop_app_2/modules/categoryDetails/category_details.dart';
+import 'package:Shop/layout/cubit/home_layout_cubit.dart';
+import 'package:Shop/layout/cubit/home_layout_states.dart';
+import 'package:Shop/models/categoriesModel.dart';
+import 'package:Shop/modules/categoryDetails/category_details.dart';
 class Categories extends StatelessWidget {
 
   @override

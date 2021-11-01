@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/layout/homeLayout.dart';
-import 'package:shop_app_2/modules/logIn/log_in.dart';
-import 'package:shop_app_2/modules/signUp/cubit/signUpStates.dart';
-import 'package:shop_app_2/shared/components/constance.dart';
-import 'package:shop_app_2/shared/network/local/cache_helper.dart';
+import 'package:Shop/layout/homeLayout.dart';
+import 'package:Shop/modules/logIn/log_in.dart';
+import 'package:Shop/modules/signUp/cubit/signUpStates.dart';
+import 'package:Shop/shared/components/constance.dart';
+import 'package:Shop/shared/network/local/cache_helper.dart';
 import 'cubit/signUpCubit.dart';
 
 class SignUp extends StatelessWidget {

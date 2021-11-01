@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
-import 'package:shop_app_2/models/userModel.dart';
-import 'package:shop_app_2/modules/logIn/cubit/logInStates.dart';
-import 'package:shop_app_2/modules/signUp/cubit/signUpStates.dart';
-import 'package:shop_app_2/shared/components/constance.dart';
-import 'package:shop_app_2/shared/network/endBoints.dart';
-import 'package:shop_app_2/shared/network/remote/dio_helper.dart';
+import 'package:Shop/models/userModel.dart';
+import 'package:Shop/modules/logIn/cubit/logInStates.dart';
+import 'package:Shop/modules/signUp/cubit/signUpStates.dart';
+import 'package:Shop/shared/components/constance.dart';
+import 'package:Shop/shared/network/endBoints.dart';
+import 'package:Shop/shared/network/remote/dio_helper.dart';
 class SignUpCubit extends Cubit<SignUpStates>{
   SignUpCubit() : super(SignUpInitialState());
 

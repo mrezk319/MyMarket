@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
-import 'package:shop_app_2/modules/getCarts/GetCarts.dart';
-import 'package:shop_app_2/modules/search/search_screen.dart';
+import 'package:Shop/layout/cubit/home_layout_cubit.dart';
+import 'package:Shop/layout/cubit/home_layout_states.dart';
+import 'package:Shop/modules/getCarts/GetCarts.dart';
+import 'package:Shop/modules/search/search_screen.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeLayout extends StatelessWidget {

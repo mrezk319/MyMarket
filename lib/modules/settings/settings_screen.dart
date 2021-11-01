@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_cubit.dart';
-import 'package:shop_app_2/layout/cubit/home_layout_states.dart';
+import 'package:Shop/layout/cubit/home_layout_cubit.dart';
+import 'package:Shop/layout/cubit/home_layout_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_2/modules/logIn/log_in.dart';
-import 'package:shop_app_2/shared/components/constance.dart';
-import 'package:shop_app_2/shared/network/local/cache_helper.dart';
+import 'package:Shop/modules/logIn/log_in.dart';
+import 'package:Shop/shared/components/constance.dart';
+import 'package:Shop/shared/network/local/cache_helper.dart';
 
 class Settings extends StatelessWidget {
   var emailUpdateController = TextEditingController();
